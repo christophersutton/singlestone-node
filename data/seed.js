@@ -1,6 +1,7 @@
 const Faker = require("faker");
 
 const seed = [...new Array(40)].map((i, idx) => ({
+  id: idx,
   name: {
     first: Faker.name.firstName(),
     middle: Faker.name.firstName(),
