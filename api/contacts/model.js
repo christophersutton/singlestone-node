@@ -8,7 +8,9 @@ const findById = async (id) => {
   return Contacts.findOne({ id: id });
 };
 
-const create = async (contact) => {};
+const create = async (contact) => {
+  return Contacts.insert(contact);
+};
 
 const update = (id, changes) => {};
 
