@@ -1,8 +1,8 @@
-var Datastore = require('nedb');
-var seed = require('./seed')
+const Datastore = require('nedb-promises');
+const seed = require('./seed')
 
 // Only using in memory datastore for demo purposes
-Contacts = new Datastore();
+let Contacts = new Datastore();
 Contacts.insert(seed);
 
 module.exports = Contacts

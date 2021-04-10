@@ -35,7 +35,8 @@
     "faker": "^4.1.0",
     "helmet": "^3.23.1",
     "http-errors": "~1.6.3",
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "nedb-promises": "^4.1.1"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
