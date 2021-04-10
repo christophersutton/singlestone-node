@@ -1,20 +1,24 @@
 const Contacts = require("../../data/db");
 
-const findAll = async () => {
+const findAll = () => {
   return Contacts.find({});
 };
 
-const findById = async (id) => {
-  return Contacts.findOne({ id: id });
+const findById = (id) => {
+  return Contacts.find({ _id: id });
 };
 
-const create = async (contact) => {
+const create = (contact) => {
   return Contacts.insert(contact);
 };
 
-const update = (id, changes) => {};
+const update = (id, changes) => {
+  return Contacts.update({ _id: id }, changes, { returnUpdatedDocs: true });
+};
 
-const remove = async (id) => {};
+const remove = (id) => {
+  return Contacts.remove({ _id: id },{});
+};
 
 module.exports = {
   findAll,

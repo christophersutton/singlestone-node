@@ -1,16 +1,21 @@
 const createError = require("http-errors");
+const hasValidKeys = require("../utils/hasValidKeys")
 
 const validateContact = async (req, res, next) => {
-  // validation stub for demo purposes, would want stronger
-  // validation in prod-grade application.
-  // Could use Typescript for basic format validation,
-  // and may want to fetch out to 3rd party address validation etc
-
+  
   const contact = req.body;
-  if (!contact.name || !contact.email || !contact.address || !contact.phone) {
-    next(createError(400));
-  } else {
+  
+  // Would add various validation methods here for production grade app
+  try {
+    if(Object.keys(contact).length === 0) throw new Error('No contact information submitted')
+    if(!hasValidKeys(contact)) throw new Error('Contact submitted with invalid format')
+    //if(!hasValidAddress(contact.address)) throw new Error('Invalid address')
+    //if(!isUniqueEmail(contact.email)) throw new Error('Contact already exists')
     next();
+  }
+  
+  catch (err) {
+    next(createError(400,err.message));
   }
 };
 

@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Contacts = require("./model");
 var validateContact = require("../middleware/validateContact");
+var contactIdExists = require("../middleware/idExists");
 
 router.get("/", function (req, res) {
   Contacts.findAll()
@@ -13,25 +14,34 @@ router.get("/", function (req, res) {
     });
 });
 
-router.get("/:id", function (req, res) {
-
-  Contacts.findById(req.params.id)
-    .then((docs) => {
-      if (!docs[0]) {
-        res.status(404).json({ message: "Contact not found" });
-      } else {
-        res.status(200).json(docs[0]);
-      }
-    })
-    .catch((err) => {
-      res.status(500).json(err);
-    });
+router.get("/:id", contactIdExists, function (req, res) {
+  res.status(200).json(res.locals.contact);
 });
 
 router.post("/", validateContact, function (req, res) {
   Contacts.create(req.body)
     .then((newDoc) => {
       res.status(201).json({ message: "Contact created", contact: newDoc });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
+router.put("/:id", contactIdExists, validateContact, function (req, res) {
+  Contacts.update(req.params.id, req.body)
+    .then((updatedDoc) => {
+      res.status(200).json({ message: "Contact updated", contact: updatedDoc });
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
+
+router.delete("/:id", contactIdExists, function (req, res) {
+  Contacts.remove(req.params.id)
+    .then((numRemoved) => {
+      res.status(200).json({message:`${numRemoved} contact removed with id: ${req.params.id}`});
     })
     .catch((err) => {
       res.status(500).json(err);
