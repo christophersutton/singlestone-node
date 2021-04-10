@@ -1,17 +1,13 @@
 const request = require("supertest");
 const express = require("express");
-const Contacts = require("../api/contacts/model");
-const router = require("../api/contacts/router");
+const Contacts = require("../api/contacts/contactsModel");
+const router = require("../api/contacts/contactsRouter");
 const seed = require("../data/seed");
-const {
-  validContact,
-  invalidContact,
-  contactObj,
-} = require("../data/testData");
+const { validContact, invalidContact, contactObj } = require("../data/testData");
 const server = express();
 server.use(express.json());
 
-jest.mock("../api/contacts/model");
+jest.mock("../api/contacts/contactsModel");
 
 describe("contacts endpoints", () => {
   beforeEach(() => {
@@ -25,7 +21,19 @@ describe("contacts endpoints", () => {
       const res = await request(server).get("/contacts");
 
       expect(res.status).toBe(200);
-      expect(res.body.length).toBe(40);
+      expect(res.body.length).toBe(30);
+      expect(Contacts.findAll.mock.calls.length).toBe(1);
+    });
+  });
+
+  describe("GET /contacts/call-list", () => {
+    it("should return 200", async () => {
+      Contacts.findAll.mockResolvedValue(seed);
+      const res = await request(server).get("/contacts/call-list");
+
+      expect(res.status).toBe(200);
+      // after filtering out contacts without a home number, length should be 20
+      expect(res.body.length).toBe(20);
       expect(Contacts.findAll.mock.calls.length).toBe(1);
     });
   });

@@ -17,11 +17,12 @@ process.on('unhandledRejection', (reason, p) => {
 app.use(express.json());
 
 // application routes
+const contactsRouter = require('./contacts/contactsRouter')
+
 app.get('/', function (req, res) {
   res.status(200).json({ api: 'up', timestamp: Date.now() });
 });
 
-const contactsRouter = require('../api/contacts/router')
 app.use('/contacts', contactsRouter)
 
 // catch 404s and forward to error handler
