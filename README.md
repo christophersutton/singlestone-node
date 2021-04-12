@@ -10,3 +10,9 @@ To run the app locally:
 - npm i
 - npm watch:dev
 - npm tests
+
+Thanks for taking the time to review my work.
+
+\-Chris
+
+chris_sutton@hey.com
