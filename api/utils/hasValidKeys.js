@@ -1,5 +1,5 @@
 const { validContact } = require('../../data/testData')
-// If using Typescript would skip all this for Type validation
+// Something like Typescript type validation would be preferable to this...
 const hasValidKeys = (contactInput) => {
 
     function getAllKeys(obj,res) {

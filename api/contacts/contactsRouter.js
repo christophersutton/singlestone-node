@@ -5,6 +5,7 @@ var validateContact = require("../middleware/validateContact");
 var contactIdExists = require("../middleware/contactIdExists");
 var generateCallList = require("../utils/generateCallList");
 
+// This route would likely need pagination
 router.get("/", function (req, res) {
   Contacts.findAll()
     .then((docs) => {
@@ -15,6 +16,7 @@ router.get("/", function (req, res) {
     });
 });
 
+// this route needs a caching strategy, also probably pagination
 router.get("/call-list", function (req, res) {
   Contacts.findAll()
     .then((docs) => {
